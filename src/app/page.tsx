@@ -1,15 +1,22 @@
+"use client";
+
+import React, { useState } from 'react';
+import ActivityForm from '../components/ActivityForm';
+import ActivityList from '../components/ActivityList';
+
 export default function Home() {
+  
+  const [activities, setActivities] = useState<{ name: string; activity: string; datetime: Date }[]>([]);
+
+  const addActivity = (name: string, activity: string, datetime : Date) => {
+    setActivities([...activities, { name, activity, datetime}]);
+  };
+
   return (
-    <main>
-      <h1 className="text-6xl font-bold text-center">Tarefas de casa</h1>
-      <div className="flex flex-row">
-        {/* Div de pessoas */}
-        <div className="w-1/3 p-4 bg-gray-200"></div>
-        {/* Div de tarefas */}
-        <div className="w-1/3 p-4 bg-gray-300"></div>
-        {/* Div de histórico */}
-        <div className="w-1/3 p-4 bg-gray-400"></div>
-      </div>
-    </main>
-  )
-}
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl mb-4">Activity Tracker</h1>
+      <ActivityForm onAddActivity={addActivity} />
+      <ActivityList activities={activities} />
+    </div>
+  );
+};
